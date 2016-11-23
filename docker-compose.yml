@@ -4,22 +4,22 @@ services:
         build: ./db
         ports:
             - "5432:5432"
+    redis:
+        image: redis
+        ports:
+            - "6379:6379"
+    revel:
+        image: annatarhe/revel
+        volumns:
+            - .:/go
+        port:
+            - "9000:9000"
     nginx:
         build: ./nginx
         ports:
             - "80:80"
-    redis:
-        image: redis
-        ports:
-            - "6379"
-    web:
-        build: .
-        volumes:
-            - .:/myapp
-        ports:
-            - "80:80"
         depends_on:
-            - nginx
             - redis
+            - revel
             - db
 
