@@ -26,15 +26,6 @@ services:
         depends_on:
             - redis
             - db
-    nginx:
-        build: ./nginx
-        ports:
-            - "80:80"
-        depends_on:
-            - redis
-            - revel
-            - db
 networks:
     back-tier:
-        driver: bridge
 
