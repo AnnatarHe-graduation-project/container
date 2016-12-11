@@ -6,26 +6,21 @@ services:
             - POSTGRES_PASSWORD=adminhele
         ports:
             - "5432:5432"
-        networks:
-            - back-tier
     redis:
         image: redis
         ports:
             - "6379:6379"
-        networks:
-            - back-tier
     revel:
         image: annatarhe/revel:0.13.1
         volumes:
             - ~/Code/golang/src:/go/src
         command: revel run github.com/AnnatarHe/exam-online-be
-        networks:
-            - back-tier
         ports:
             - "9000:9000"
         depends_on:
             - redis
             - db
-networks:
-    back-tier:
+        links:
+            - db
+            - redis
 
