@@ -1,0 +1,28 @@
+version: '2'
+services:
+    db:
+        image: postgres
+        volumes:
+            - ~/Code/container/data:/var/lib/postgresql/data
+        environment:
+            - POSTGRES_PASSWORD=adminhele
+        ports:
+            - "5432:5432"
+    redis:
+        image: redis
+        ports:
+            - "6379:6379"
+    revel:
+        image: annatarhe/revel:0.13.1
+        volumes:
+            - ~/Code/container/producation:/go
+        command: ./run.sh
+        ports:
+            - "9000:9000"
+        depends_on:
+            - redis
+            - db
+        links:
+            - db
+            - redis
+
